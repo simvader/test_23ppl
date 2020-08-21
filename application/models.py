@@ -6,7 +6,9 @@ class Drug(models.Model):
         max_length=10,
         unique=True
     )
-    description = models.TextField()
+    description = models.TextField(
+        max_length=255
+    )
 
 
 class Vaccination(models.Model):
