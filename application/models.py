@@ -13,3 +13,8 @@ class Vaccination(models.Model):
     rut = models.IntegerField()
     dose = models.FloatField()
     date = models.DateTimeField()
+    drug = models.ForeignKey(
+        'Drug',
+        on_delete=models.PROTECT,
+        related_name="vaccination",
+    )

@@ -12,6 +12,10 @@ class DrugSerializer(serializers.ModelSerializer):
 
 
 class VaccinationSerializer(serializers.ModelSerializer):
+    drug_id = serializers.IntegerField(
+        write_only=True
+    )
+    
     class Meta:
         model = Vaccination
         fields = '__all__'
