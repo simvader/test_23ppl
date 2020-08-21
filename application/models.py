@@ -12,7 +12,7 @@ class Drug(models.Model):
 
 
 class Vaccination(models.Model):
-    rut = models.CharField(max_length=15)
+    rut = models.CharField(max_length=50)
     dose = models.FloatField()
     date = models.DateTimeField()
     drug = models.ForeignKey(

@@ -3,6 +3,7 @@ from .models import (
     Drug,
     Vaccination
 )
+from itertools import cycle
 
 
 class DrugSerializer(serializers.ModelSerializer):
@@ -25,15 +26,21 @@ class VaccinationSerializer(serializers.ModelSerializer):
 
     def validate_rut(self, value):
         """Custom validation for rut"""
-        rut = value.upper()
-        rut = rut.replace(".", "")
-        aux = rut[:-1]
-        dv = rut[-1:]
-        reversed = map(int, reversed(str(aux)))
-        factors = cycle(range(2,8))
-        a = sum(d * f for d, f in zip(reversed, factors))
-        res = (-a)%11
-        if str(res) == dv:
-            return aux
+        run = value.upper()
+        run = run.replace('-', '')
+        run = run.replace('.', '')
+        try:
+            validated = int(run)
+        except ValueError:
+            raise serializers.ValidationError("Rut is not valid.")
+        aux = run[:-1]
+        dv = run[-1:]
+        reversed_digits = map(int, reversed(str(aux)))
+        factors = cycle(range(2, 8))
+        s = sum(d * f for d, f in zip(reversed_digits, factors))
+        if str((-s) % 11) == dv:
+            return run
+        elif dv=='K' and ((-s) % 11) == 10:
+            return run
         else:
             raise serializers.ValidationError("Rut is not valid.")
