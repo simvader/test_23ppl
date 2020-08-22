@@ -1,7 +1,6 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.authtoken.models import Token
 from .models import (
     Drug,
     Vaccination,
@@ -110,12 +109,3 @@ class VaccinationRudView(APIView):
         vaccination = self.get_object(pk)
         vaccination.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-class TokenView(APIView):
-
-    def get(self, request):
-        token = Token.objects.create(user=User.objects.get(pk=1))[1]
-        return Response({
-            'token': token
-        })
