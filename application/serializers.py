@@ -47,6 +47,8 @@ class VaccinationSerializer(serializers.ModelSerializer):
 
     def validate_dose(self, value):
         if value  < 0.15 or value > 1.0:
-            raise serializers.ValidationError("Ensure dose its between 0.15 and 1.0 cm3 inclusive")
+            raise serializers.ValidationError(
+                "Ensure dose its between 0.15 and 1.0 cm3 inclusive"
+            )
         else:
             return value
