@@ -10,9 +10,11 @@ from .serializers import (
     DrugSerializer,
     VaccinationSerializer
 )
+from rest_framework.permissions import IsAuthenticated
 
 
 class DrugView(APIView):
+    permission_classes = (IsAuthenticated,)
 
     def get(self, request):
         """Get all Drugs."""
@@ -31,6 +33,7 @@ class DrugView(APIView):
 
 
 class DrugRudView(APIView):
+    permission_classes = (IsAuthenticated,)
 
     def get_object(self, pk):
         try:
@@ -59,6 +62,7 @@ class DrugRudView(APIView):
 
 
 class VaccinationView(APIView):
+    permission_classes = (IsAuthenticated, )
 
     def get(self, request):
         """Get all vaccinations."""
@@ -78,6 +82,7 @@ class VaccinationView(APIView):
 
 
 class VaccinationRudView(APIView):
+    permission_classes = (IsAuthenticated, )
 
     def get_object(self, pk):
         try:
