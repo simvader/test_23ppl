@@ -6,6 +6,7 @@ from .models import (
     Drug,
     Vaccination,
 )
+from django.contrib.auth.models import User
 from django.http import Http404
 from .serializers import (
     DrugSerializer,
@@ -114,7 +115,7 @@ class VaccinationRudView(APIView):
 class TokenView(APIView):
 
     def get(self, request):
-        token = Token.objects.create(user='generic_dummy')
+        token = Token.objects.create(user=User.objects.get(pk=1))[1]
         return Response({
             'token': token
         })
