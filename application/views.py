@@ -11,7 +11,9 @@ from .serializers import (
     DrugSerializer,
     VaccinationSerializer
 )
+from django.contrib.auth.models import AnonymousUser
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.authtoken.models import Token
 
 
 class DrugView(APIView):
@@ -109,3 +111,15 @@ class VaccinationRudView(APIView):
         vaccination = self.get_object(pk)
         vaccination.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class TokenView(APIView):
+
+    def get(self, request):
+        user = User.objects.get(pk=1)
+        t = Token.objects.filter(user_id=1)
+        t.delete()
+        token = Token.objects.create(user=user)
+        return Response({
+            'token': token.key
+        })
