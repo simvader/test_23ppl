@@ -10,7 +10,8 @@ from django.http import Http404
 from .serializers import (
     DrugSerializer,
     DrugUpdateSerializer,
-    VaccinationSerializer
+    VaccinationSerializer,
+    VaccinationUpdateSerializer,
 )
 from django.contrib.auth.models import AnonymousUser
 from rest_framework.permissions import IsAuthenticated
@@ -103,8 +104,8 @@ class VaccinationRudView(APIView):
 
     def put(self, request, pk):
         vaccination = self.get_object(pk)
-        serializer = VaccinationSerializer(vaccination, data=request.data)
-        if serialiser.is_valid():
+        serializer = VaccinationUpdateSerializer(vaccination, data=request.data)
+        if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         else:
