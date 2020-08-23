@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 from django.http import Http404
 from .serializers import (
     DrugSerializer,
+    DrugUpdateSerializer,
     VaccinationSerializer
 )
 from django.contrib.auth.models import AnonymousUser
@@ -28,6 +29,7 @@ class DrugView(APIView):
         return Response(serializer.data)
 
     def post(self, request):
+        """Create a Drug"""
         serializer = DrugSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -40,19 +42,20 @@ class DrugRudView(APIView):
 
     def get_object(self, pk):
         try:
-            Drug.objects.get(pk=pk)
+            return Drug.objects.get(pk=pk)
         except Drug.DoesNotExist:
             raise Http404
 
     def get(self, request, pk):
+        """Get a Specific Drug"""
         drug = self.get_object(pk)
-        serializer = DrugSerializer(drug)
+        serializer = DrugSerializer(drug, many=False)
         return Response(serializer.data)
 
     def put(self, request, pk):
         drug = self.get_object(pk)
-        serializer = DrugSerializer(drug, data=request.data)
-        if serialiser.is_valid():
+        serializer = DrugUpdateSerializer(drug, data=request.data)
+        if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         else:
@@ -89,7 +92,7 @@ class VaccinationRudView(APIView):
 
     def get_object(self, pk):
         try:
-            Vaccination.objects.get(pk=pk)
+            return Vaccination.objects.get(pk=pk)
         except Vaccination.DoesNotExist:
             raise Http404
 

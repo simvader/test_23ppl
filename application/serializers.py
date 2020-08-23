@@ -7,9 +7,22 @@ from itertools import cycle
 
 
 class DrugSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField()
+
     class Meta:
         model = Drug
         fields = '__all__'
+
+
+class DrugUpdateSerializer(serializers.ModelSerializer):
+    """Allow update a few items"""
+    name = serializers.CharField(required=False)
+    code = serializers.CharField(required=False)
+    description = serializers.CharField(required=False)
+
+    class Meta:
+        model = Drug
+        fields = ('name', 'code', 'description')
 
 
 class VaccinationSerializer(serializers.ModelSerializer):
